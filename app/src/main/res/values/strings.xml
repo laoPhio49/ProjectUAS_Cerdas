@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ProjectUAS_Cerdas</string>
+
+    <string name="navigationHome">Home</string>
+    <string name="navigationSearch">Search</string>
+    <string name="navigationFavorite">Favorite</string>
+    <string name="navigationAccount">Account</string>
+</resources>

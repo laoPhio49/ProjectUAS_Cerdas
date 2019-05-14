@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1030017924638",
+    "firebase_url": "https://kosankom-1708.firebaseio.com",
+    "project_id": "kosankom-1708",
+    "storage_bucket": "kosankom-1708.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030017924638:android:6c85197e891cd4e3",
+        "android_client_info": {
+          "package_name": "umn.ac.id.projectuas_cerdas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030017924638-sr6nh3q46pa3j7jdgunaq9n74s28942p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "umn.ac.id.projectuas_cerdas",
+            "certificate_hash": "e51e0b5c75383fe86e1a5cf0200a1be382c5c91f"
+          }
+        },
+        {
+          "client_id": "1030017924638-ljlva4k9goaapgq5ngl33jdnd0c8akn7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEH2N-UoiV75cakKXw8l-ytJP9RkfWcEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030017924638-ljlva4k9goaapgq5ngl33jdnd0c8akn7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
