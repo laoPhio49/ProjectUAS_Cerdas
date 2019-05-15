@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn();
+                if(checkInput()){
+                    signIn();
+                }
             }
         });
 
@@ -56,9 +59,30 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void signIn(){
+    public boolean checkInput(){
         emailText = findViewById(R.id.userid);
         passText = findViewById(R.id.userpass);
+
+        if(emailText.getText().toString().isEmpty()){
+            emailText.setError("Email is required");
+            emailText.requestFocus();
+            return false;
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(emailText.getText().toString()).matches()){
+            emailText.setError("Please input a valid email");
+            emailText.requestFocus();
+            return false;
+        }
+        if(passText.getText().toString().isEmpty()){
+            passText.setError("Password is required");
+            passText.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    public void signIn(){
         String email = emailText.getText().toString();
         String password = passText.getText().toString();
         mFirebaseAuth.signInWithEmailAndPassword(email,password)

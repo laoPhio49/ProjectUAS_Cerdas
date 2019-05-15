@@ -5,4 +5,13 @@
     <string name="navigationSearch">Search</string>
     <string name="navigationFavorite">Favorite</string>
     <string name="navigationAccount">Account</string>
+
+    <string name="registerOccupation">Occupation</string>
+    <string-array name="registerListOccupation">
+        <item>Mahasiswa</item>
+        <item>Pegawai Negeri</item>
+        <item>Pegawai Swasta</item>
+        <item>Wirausaha</item>
+        <item>Pekerja Lepas</item>
+    </string-array>
 </resources>
