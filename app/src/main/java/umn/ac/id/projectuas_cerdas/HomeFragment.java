@@ -52,8 +52,6 @@ public class HomeFragment extends Fragment {
                     String rooms = (String) messageSnapshot.child("jumlahKamar").getValue();
                     String owner = (String) messageSnapshot.child("pemilikId").getValue();
 
-                    Log.e("NAME", name == null ? "NGEHE" : name);
-
                     kosArrayList.add(new Kos(name,address,"",details,type,owner,price,avrooms,rooms));
                 }
             }
