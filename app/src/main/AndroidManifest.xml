@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".SplashScreen"></activity>
+        <activity android:name=".SplashScreen"/>
     </application>
 
 </manifest>

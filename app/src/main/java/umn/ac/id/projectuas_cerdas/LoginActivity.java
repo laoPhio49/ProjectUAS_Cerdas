@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -67,12 +68,18 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Log.d("STRING", "Login Berhasil");
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    makeToast("Log in success");
                     startActivity(intent);
                 }
                 else{
+                    makeToast("Invalid Credentials");
                     Log.d("STRING", "Login Gagal");
                 }
             }
         });
+    }
+
+    public void makeToast(String text){
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 }

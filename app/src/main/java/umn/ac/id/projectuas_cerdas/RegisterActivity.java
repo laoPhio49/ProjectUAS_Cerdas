@@ -3,6 +3,7 @@ package umn.ac.id.projectuas_cerdas;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,10 +36,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                     finish();
                 }
-                else{
-                    Toast.makeText(getApplicationContext(), "Form not completed", Toast.LENGTH_SHORT)
-                            .show();
-                }
+//                else{
+//                    Toast.makeText(getApplicationContext(), "Form not completed", Toast.LENGTH_SHORT)
+//                            .show();
+//                }
 
                 //Toast.makeText(RegisterActivity.this, "", Toast.LENGTH_SHORT).show();
             }
@@ -72,6 +73,11 @@ public class RegisterActivity extends AppCompatActivity {
             edtEmail.requestFocus();
             return false;
         }
+        if(!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches()){
+            edtEmail.setError("Please input a valid email");
+            edtEmail.requestFocus();
+            return false;
+        }
         if(edtPass.getText().toString().isEmpty()){
             edtPass.setError("Password is required");
             edtPass.requestFocus();
@@ -88,12 +94,12 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
         if(edtOccupation.getText().toString().isEmpty()){
-            edtOccupation.setError("Username is required");
+            edtOccupation.setError("Occupation is required");
             edtOccupation.requestFocus();
             return false;
         }
         if(edtPhone.getText().toString().isEmpty()){
-            edtPhone.setError("Username is required");
+            edtPhone.setError("Phone number is required");
             edtPhone.requestFocus();
             return false;
         }

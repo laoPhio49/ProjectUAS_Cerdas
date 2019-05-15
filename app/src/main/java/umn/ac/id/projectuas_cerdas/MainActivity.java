@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -77,5 +78,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
         return loadFragment(fragment);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        //firebaseAuth.getInstance();
+        firebaseAuth.signOut();
+        Log.d("SIGN OUT", "User has been signed out");
     }
 }
