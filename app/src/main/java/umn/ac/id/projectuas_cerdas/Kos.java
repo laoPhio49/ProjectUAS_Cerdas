@@ -6,17 +6,19 @@ public class Kos {
     private String gambar;
     private String detail;
     private String jenis;
-    private int harga;
-    private int kamarTersedia;
-    private int jumlahKamar;
+    private String pemilik;
+    private String harga;
+    private String kamarTersedia;
+    private String jumlahKamar;
     public static int total;
 
-    public Kos(String name, String alamat, String gambar, String detail, String jenis, int harga, int kamarTersedia, int jumlahKamar) {
+    public Kos(String name, String alamat, String gambar, String detail, String jenis,String pemilik, String harga, String kamarTersedia, String jumlahKamar) {
         this.name = name;
         this.alamat = alamat;
         this.gambar = gambar;
         this.detail = detail;
         this.jenis = jenis;
+        this.pemilik = pemilik;
         this.harga = harga;
         this.kamarTersedia = kamarTersedia;
         this.jumlahKamar = jumlahKamar;
@@ -43,15 +45,19 @@ public class Kos {
         return jenis;
     }
 
-    public int getHarga() {
+    public String getPemilik() {
+        return pemilik;
+    }
+
+    public String getHarga() {
         return harga;
     }
 
-    public int getKamarTersedia() {
+    public String getKamarTersedia() {
         return kamarTersedia;
     }
 
-    public int getJumlahKamar() {
+    public String getJumlahKamar() {
         return jumlahKamar;
     }
 

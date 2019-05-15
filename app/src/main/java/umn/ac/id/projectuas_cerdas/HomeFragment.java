@@ -7,15 +7,28 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private ArrayList<Kos> kosArrayList;
+    private ArrayList<Kos> kosArrayList = new ArrayList<>();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    DatabaseReference databaseReference = database.getReference("kos");
 
     @Nullable
     @Override
@@ -24,21 +37,40 @@ public class HomeFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
 
-        addData();
+        //addData();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot messageSnapshot: dataSnapshot.getChildren()){
+                    String name = (String) messageSnapshot.child("nama").getValue();
+                    String price = String.valueOf(messageSnapshot.child("harga").getValue());
+                    String type = (String) messageSnapshot.child("jenis").getValue();
+                    String address = (String) messageSnapshot.child("lokasi").getValue();
+                    String details = (String) messageSnapshot.child("detail").getValue();
+                    String avrooms = (String) messageSnapshot.child("kamarTersedia").getValue();
+                    String rooms = (String) messageSnapshot.child("jumlahKamar").getValue();
+                    String owner = (String) messageSnapshot.child("pemilikId").getValue();
+
+                    Log.e("NAME", name == null ? "NGEHE" : name);
+
+                    kosArrayList.add(new Kos(name,address,"",details,type,owner,price,avrooms,rooms));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         KosAdapter kosAdapter = new KosAdapter(kosArrayList);
 
         recyclerView.setAdapter(kosAdapter);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
         return view;
-    }
-
-    public void addData(){
-        kosArrayList = new ArrayList<>();
-        kosArrayList.add(new Kos("Kos Aldric", "Pascal Timur 16", "", "Kos inet kampang", "Campur", 2000000, 10, 100));
-        kosArrayList.add(new Kos("Kos Fudan", "Apartemen Scientia", "", "Ga jadi pindah", "Campur", 5000000, 2, 3));
-        kosArrayList.add(new Kos("Kos Mbak Dewi", "Kelapa Dia", "", "Gatau deh ini mah", "Wanita", 1500000, 5, 10));
     }
 }
