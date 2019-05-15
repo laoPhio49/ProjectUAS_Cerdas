@@ -22,6 +22,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     String email;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        //mFirebaseUser.get
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "umn.ac.id.projectuas_cerdas"
-        minSdkVersion 25
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -34,11 +34,9 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:percent:27.1.1'
 
-    implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-auth:16.2.1'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.firebase:firebase-database:17.0.0'
-
-
 }
 
