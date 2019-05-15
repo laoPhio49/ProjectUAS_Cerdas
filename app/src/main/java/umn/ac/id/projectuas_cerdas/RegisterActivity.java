@@ -41,8 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkValue()){
-//                    Register(email, password);
-                    AddToDB();
+                    Register(email, password);
+                    addToDB();
                     makeToast("Registered");
                 }
             }
@@ -136,10 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                //Log.d("SIGN UP", "email: " + email);
-                //Log.d("SIGN UP", "password: " + pass);
                 if(task.isSuccessful()){
-//                    AddToDB();
                     makeToast("User successfully registered");
                     Log.d("SIGN UP", "User successfully registered");
                 }
@@ -153,53 +150,138 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
-    public void AddToDB(){
-        Log.d("SIGN UP", "In Function AddToDB()");
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference userCount = database.getReference("user");
+    Long finalCount;
 
-        final long[] idx = new long[1];
+    public void addToDB() {
+        Log.d("ADDTODB", "In Function addToDB");
+        final FirebaseDatabase db = FirebaseDatabase.getInstance();
+        final DatabaseReference dbRef = db.getReference("user");
 
-        userCount.addValueEventListener(new ValueEventListener() {
+        //Long finalCount;
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long childrenCount = dataSnapshot.getChildrenCount();
-                idx[0] = childrenCount;
+                Log.d("ADDTODB", "In Function onDataChange");
+                Log.d("ADDTODB", "dataSnapshot.getChildrenCount() -> " + dataSnapshot.getChildrenCount());
+
+                Long count = dataSnapshot.getChildrenCount();
+
+                finalCount = count+1;
+
+                Log.d("ADDTODB", "finalCount in onDataChange: " + finalCount);
+
+                writeToDB("email", String.valueOf(finalCount), email, db);
+
+                writeToDB("favourite/0", String.valueOf(finalCount), "0", db);
+
+                writeToDB("jenisId", String.valueOf(finalCount), "3", db);
+                writeToDB("noHP", String.valueOf(finalCount), phone, db);
+                writeToDB("password", String.valueOf(finalCount), password, db);
+                writeToDB("pekerjaanId", String.valueOf(finalCount), occupation, db);
+                writeToDB("username", String.valueOf(finalCount), username, db);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("ADD TO DB", "Failed to read value. ", databaseError.toException());
+                Log.d("ADDTODB", "In Function onCancelled");
             }
-        });
+        };
 
-        String count = Long.toString(idx[0]);
+        dbRef.addListenerForSingleValueEvent(valueEventListener);
 
-        Log.d("ADD TO DB", "count: " + count);
+        Log.d("ADDTODB", "finalCount: " + finalCount);
 
-//        writeToDB("email", count, email, database);
-//        writeToDB("jenisId", count, "3", database);
-//        writeToDB("noHP", count, phone, database);
-//        writeToDB("password", count, password, database);
-//        writeToDB("pekerjaanId", count, occupation, database);
-//        writeToDB("username", count, username, database);
-
-        //databaseReferenceEmail.setValue(email);
-    }
-
-    public void writeToDB(String type, String count, String value, FirebaseDatabase database){
-        if(count.equals("countUser")){
-            DatabaseReference databaseReference = database.getReference("user/userCount");
-            databaseReference.setValue(value);
-        }
-        else{
-            DatabaseReference databaseReference = database.getReference("user/" + count + "/" + type);
-            databaseReference.setValue(value);
-        }
-
+        dbRef.removeEventListener(valueEventListener);
     }
 
     public void makeToast(String text){
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
+
+    public void writeToDB(String type, String count, String value, FirebaseDatabase database){
+//        if(count.equals("countUser")){
+//            DatabaseReference databaseReference = database.getReference("user/userCount");
+//            databaseReference.setValue(value);
+//        }
+//        else{
+//            DatabaseReference databaseReference = database.getReference("user/" + count + "/" + type);
+//            databaseReference.setValue(value);
+//        }
+
+        DatabaseReference databaseReference = database.getReference("user/" + count + "/" + type);
+        databaseReference.setValue(value);
+
+    }
 }
+
+
+//    public void AddToDB(){
+//        Log.d("ADD TO DB", "In Function AddToDB()");
+//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        final DatabaseReference userCount = database.getReference("user/userCount");
+//
+//        final long[] idx = new long[1];
+//
+//        ValueEventListener valueEventListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                try{
+//                    String childrenCount = dataSnapshot.getValue(String.class);
+//
+//                    Log.d("ADD TO DB", "count inside func: " + childrenCount);
+//
+//                    final String count = String.valueOf(idx[0]);
+//
+//                    writeToDB("email", count, email, database);
+//                    writeToDB("jenisId", count, "3", database);
+//                    writeToDB("noHP", count, phone, database);
+//                    writeToDB("password", count, password, database);
+//                    writeToDB("pekerjaanId", count, occupation, database);
+//                    writeToDB("username", count, username, database);
+//
+//                    finalize();
+//                }
+//                catch (Throwable throwable){
+//                    Log.e("ADD TO DB", throwable.getMessage());
+//                }
+//
+//            }
+//
+//            @Override
+//            protected void finalize() throws Throwable {
+//                super.finalize();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e("ADD TO DB", "Failed to read value. ", databaseError.toException());
+//            }
+//        };
+//
+//        userCount.addValueEventListener(valueEventListener);
+//
+//        Log.d("ADD TO DB", "count outside func: " + idx[0]);
+//
+//
+//        userCount.removeEventListener(valueEventListener);
+//    }
+//
+//    public void AddUserCount(){
+//        Log.d("ADD TO DB", "finalCount: " + finalCount);
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference userCount = database.getReference("user/userCount");
+//        userCount.setValue(finalCount);
+//    }
+//
+//    public void writeToDB(String type, String count, String value, FirebaseDatabase database){
+//        if(count.equals("countUser")){
+//            DatabaseReference databaseReference = database.getReference("user/userCount");
+//            databaseReference.setValue(value);
+//        }
+//        else{
+//            DatabaseReference databaseReference = database.getReference("user/" + count + "/" + type);
+//            databaseReference.setValue(value);
+//        }
+//
+//    }
