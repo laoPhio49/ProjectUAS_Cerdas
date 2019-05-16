@@ -69,6 +69,7 @@ public class KosAdapter extends RecyclerView.Adapter  {
                     bundle.putString("tipe",kosArrayList.get(pos).getJenis());
                     bundle.putString("price",kosArrayList.get(pos).getHarga());
                     bundle.putString("detail",kosArrayList.get(pos).getDetail());
+                    bundle.putString("position", String.valueOf(pos));
                     intent.putExtras(bundle);
                     itemView.getContext().startActivity(intent);
                 }

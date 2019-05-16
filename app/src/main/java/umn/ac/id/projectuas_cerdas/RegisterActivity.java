@@ -200,15 +200,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void writeToDB(String type, String count, String value, FirebaseDatabase database){
-//        if(count.equals("countUser")){
-//            DatabaseReference databaseReference = database.getReference("user/userCount");
-//            databaseReference.setValue(value);
-//        }
-//        else{
-//            DatabaseReference databaseReference = database.getReference("user/" + count + "/" + type);
-//            databaseReference.setValue(value);
-//        }
-
         DatabaseReference databaseReference = database.getReference("user/" + count + "/" + type);
         databaseReference.setValue(value);
 

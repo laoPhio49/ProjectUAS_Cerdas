@@ -1,16 +1,28 @@
 package umn.ac.id.projectuas_cerdas;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class DetailKosan extends AppCompatActivity {
 
     TextView name , address, avroom, rooms, type, price, detail;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    int position;
+    String str_pos;
+    FloatingActionButton floatingActionButton;
 
 
 
@@ -27,6 +39,8 @@ public class DetailKosan extends AppCompatActivity {
         type = findViewById(R.id.kostType);
         price = findViewById(R.id.kostPrice);
         detail = findViewById(R.id.kostDetail);
+        position = Integer.valueOf(bundle.getString("position"))+1;
+        str_pos = String.valueOf(position);
 
         if(bundle!=null){
             name.setText(bundle.getString("nama"));
@@ -52,9 +66,40 @@ public class DetailKosan extends AppCompatActivity {
             detail.setText("");
         }
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                DatabaseReference databaseReference = database.getReference("user");
+
+                final String useremail = user.getEmail();
+
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            User user = snapshot.getValue(User.class);
+                            if(user.getEmail().equals(useremail)){
+                                dataSnapshot.getRef().child("Favorite").child(str_pos).setValue(str_pos);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+        });
 
 
 
 
     }
+
 }
