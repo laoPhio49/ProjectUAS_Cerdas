@@ -20,7 +20,12 @@ android {
 
 apply plugin: 'com.google.gms.google-services'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:7.3.2'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

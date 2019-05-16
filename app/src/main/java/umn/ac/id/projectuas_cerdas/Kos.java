@@ -1,6 +1,7 @@
 package umn.ac.id.projectuas_cerdas;
 
 public class Kos {
+    private String id;
     private String name;
     private String alamat;
     private String gambar;
@@ -12,7 +13,8 @@ public class Kos {
     private String jumlahKamar;
     public static int total;
 
-    public Kos(String name, String alamat, String gambar, String detail, String jenis,String pemilik, String harga, String kamarTersedia, String jumlahKamar) {
+    public Kos(String id, String name, String alamat, String gambar, String detail, String jenis,String pemilik, String harga, String kamarTersedia, String jumlahKamar) {
+        this.id = id;
         this.name = name;
         this.alamat = alamat;
         this.gambar = gambar;
@@ -25,9 +27,15 @@ public class Kos {
         total++;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() { return name; }
 
     public String getAlamat() {
         return alamat;

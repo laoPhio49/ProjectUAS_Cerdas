@@ -3,6 +3,7 @@
     package="umn.ac.id.projectuas_cerdas">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".FireApp"
@@ -23,6 +24,7 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".SplashScreen" />
+        <activity android:name=".SearchFragment" />
     </application>
 
 </manifest>

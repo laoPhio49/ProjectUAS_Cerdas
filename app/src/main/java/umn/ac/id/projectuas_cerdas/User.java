@@ -9,10 +9,9 @@ public class User {
     private String favorite;
     private String type;
 
-    public User(String nama, String email, String password, String phone, String occupation, String favorite, String type) {
+    public User(String nama, String email, String phone, String occupation, String favorite, String type) {
         this.nama = nama;
         this.email = email;
-        this.password = password;
         this.phone = phone;
         this.occupation = occupation;
         this.favorite = favorite;
@@ -33,14 +32,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getPhone() {

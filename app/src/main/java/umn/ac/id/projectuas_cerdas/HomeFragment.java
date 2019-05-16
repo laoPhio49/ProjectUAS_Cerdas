@@ -29,7 +29,6 @@ public class HomeFragment extends Fragment {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     DatabaseReference databaseReference = database.getReference("kos");
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,7 +41,9 @@ public class HomeFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i=1;
                 for(DataSnapshot messageSnapshot: dataSnapshot.getChildren()){
+                    String id = String.valueOf(i++);
                     String name = (String) messageSnapshot.child("nama").getValue();
                     String price = String.valueOf(messageSnapshot.child("harga").getValue());
                     String type = (String) messageSnapshot.child("jenis").getValue();
@@ -51,8 +52,7 @@ public class HomeFragment extends Fragment {
                     String avrooms = (String) messageSnapshot.child("kamarTersedia").getValue();
                     String rooms = (String) messageSnapshot.child("jumlahKamar").getValue();
                     String owner = (String) messageSnapshot.child("pemilikId").getValue();
-
-                    kosArrayList.add(new Kos(name,address,"",details,type,owner,price,avrooms,rooms));
+                    kosArrayList.add(new Kos(id, name,address,"",details,type,owner,price,avrooms,rooms));
                 }
             }
 

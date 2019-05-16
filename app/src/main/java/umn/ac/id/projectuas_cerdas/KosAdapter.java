@@ -62,6 +62,7 @@ public class KosAdapter extends RecyclerView.Adapter  {
                     int pos = getAdapterPosition();
                     Intent intent = new Intent(itemView.getContext(), DetailKosan.class);
                     Bundle bundle = new Bundle();
+                    bundle.putString("id", kosArrayList.get(pos).getId());
                     bundle.putString("nama",kosArrayList.get(pos).getName());
                     bundle.putString("alamat",kosArrayList.get(pos).getAlamat());
                     bundle.putString("avroom",kosArrayList.get(pos).getKamarTersedia());
