@@ -99,11 +99,6 @@ public class RegisterActivity extends AppCompatActivity {
             edtConfPass.requestFocus();
             return false;
         }
-//        if(edtOccupation.getText().toString().isEmpty()){
-//            edtOccupation.setError("Occupation is required");
-//            edtOccupation.requestFocus();
-//            return false;
-//        }
         if(spnOccupation.getSelectedItem().toString().isEmpty()){
             spnOccupation.requestFocus();
         }
@@ -202,77 +197,5 @@ public class RegisterActivity extends AppCompatActivity {
     public void writeToDB(String type, String count, String value, FirebaseDatabase database){
         DatabaseReference databaseReference = database.getReference("user/" + count + "/" + type);
         databaseReference.setValue(value);
-
     }
 }
-
-
-//    public void AddToDB(){
-//        Log.d("ADD TO DB", "In Function AddToDB()");
-//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        final DatabaseReference userCount = database.getReference("user/userCount");
-//
-//        final long[] idx = new long[1];
-//
-//        ValueEventListener valueEventListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                try{
-//                    String childrenCount = dataSnapshot.getValue(String.class);
-//
-//                    Log.d("ADD TO DB", "count inside func: " + childrenCount);
-//
-//                    final String count = String.valueOf(idx[0]);
-//
-//                    writeToDB("email", count, email, database);
-//                    writeToDB("jenisId", count, "3", database);
-//                    writeToDB("noHP", count, phone, database);
-//                    writeToDB("password", count, password, database);
-//                    writeToDB("pekerjaanId", count, occupation, database);
-//                    writeToDB("username", count, username, database);
-//
-//                    finalize();
-//                }
-//                catch (Throwable throwable){
-//                    Log.e("ADD TO DB", throwable.getMessage());
-//                }
-//
-//            }
-//
-//            @Override
-//            protected void finalize() throws Throwable {
-//                super.finalize();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Log.e("ADD TO DB", "Failed to read value. ", databaseError.toException());
-//            }
-//        };
-//
-//        userCount.addValueEventListener(valueEventListener);
-//
-//        Log.d("ADD TO DB", "count outside func: " + idx[0]);
-//
-//
-//        userCount.removeEventListener(valueEventListener);
-//    }
-//
-//    public void AddUserCount(){
-//        Log.d("ADD TO DB", "finalCount: " + finalCount);
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference userCount = database.getReference("user/userCount");
-//        userCount.setValue(finalCount);
-//    }
-//
-//    public void writeToDB(String type, String count, String value, FirebaseDatabase database){
-//        if(count.equals("countUser")){
-//            DatabaseReference databaseReference = database.getReference("user/userCount");
-//            databaseReference.setValue(value);
-//        }
-//        else{
-//            DatabaseReference databaseReference = database.getReference("user/" + count + "/" + type);
-//            databaseReference.setValue(value);
-//        }
-//
-//    }

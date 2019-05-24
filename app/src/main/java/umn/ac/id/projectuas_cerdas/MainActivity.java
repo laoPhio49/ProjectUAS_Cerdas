@@ -10,7 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,12 +31,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private FirebaseUser mFirebaseUser;
     String emailUser;
 
+    TextView homeInfo;
+    ProgressBar progressBar;
+
     private User user;
 
     @Override
     protected void onStart() {
         super.onStart();
-        //mFirebaseUser.get
     }
 
     @Override
@@ -41,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        homeInfo = findViewById(R.id.home_info);
+        progressBar = findViewById(R.id.home_progressBar);
         loadFragment(new HomeFragment());
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bn_main);
@@ -60,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                Log.d("USER", dataSnapshot.toString());
+                int i=1;
                 for(DataSnapshot messageSnapshot: dataSnapshot.getChildren()){
 
                     String email = (String) messageSnapshot.child("email").getValue();
@@ -86,11 +94,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                         User temp = new User(name, email, phone, occupation, "", jenisId);
                         user = temp;
+                        user.setIdx(Integer.toString(i));
                         Log.d("USER", "user.getNama() -> " + user.getNama());
                     }
-
-//
-
+                    i++;
                     //kosArrayList.add(new Kos(name,address,"",details,type,owner,price,avrooms,rooms));
                 }
             }
@@ -131,7 +138,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()){
             case R.id.home_menu:
+                progressBar.setVisibility(View.VISIBLE);
+                homeInfo.setVisibility(View.VISIBLE);
+                homeInfo.setText("Loading account information\nand Kos info");
+
                 fragment = new HomeFragment();
+
+                progressBar.setVisibility(View.GONE);
+                homeInfo.setVisibility(View.GONE);
 
                 break;
             case R.id.search_menu:
@@ -148,26 +162,38 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 break;
             case R.id.account_menu:
-                fragment = new AccountFragment();
-                Bundle data = new Bundle();
+                if(user != null){
+                    fragment = new AccountFragment();
+                    Bundle data = new Bundle();
 
-                Log.d("USER", "name: " + user.getNama());
-                Log.d("USER", "phone: " + user.getPhone());
-                Log.d("USER", "occupation: " + user.getOccupation());
-                Log.d("USER", "jenisId: " + user.getType());
-                Log.d("USER", "email: " + emailUser);
+                    Log.d("USER", "name: " + user.getNama());
+                    Log.d("USER", "phone: " + user.getPhone());
+                    Log.d("USER", "occupation: " + user.getOccupation());
+                    Log.d("USER", "jenisId: " + user.getType());
+                    Log.d("USER", "email: " + emailUser);
 
-                data.putString("email", emailUser);
-                data.putString("username", user.getNama());
-                data.putString("phone", user.getPhone());
-                data.putString("occupation", user.getOccupation());
-                //data.putString("");
-                fragment.setArguments(data);
-//                ((TextView) fragment.getView().findViewById(R.id.tv_username)).setText("Someone else");
+                    data.putString("email", emailUser);
+                    data.putString("username", user.getNama());
+                    data.putString("phone", user.getPhone());
+                    data.putString("occupation", user.getOccupation());
+                    data.putString("jenis", user.getType());
+                    data.putString("index", user.getIdx());
+
+                    fragment.setArguments(data);
+
+                }
+                else{
+                    makeToast("Account not fully loaded");
+                }
                 break;
+
         }
 
         return loadFragment(fragment);
+    }
+
+    public void makeToast(String text){
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override

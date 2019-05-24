@@ -8,6 +8,7 @@ public class User {
     private String occupation;
     private String favorite;
     private String type;
+    private String idx;
 
     public User(String nama, String email, String phone, String occupation, String favorite, String type) {
         this.nama = nama;
@@ -64,5 +65,13 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getIdx() {
+        return idx;
+    }
+
+    public void setIdx(String idx) {
+        this.idx = idx;
     }
 }

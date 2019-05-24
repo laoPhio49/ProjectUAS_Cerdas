@@ -77,15 +77,15 @@ public class KosAdapter extends RecyclerView.Adapter  {
             });
         }
 
-        public void bindView(int pos){
-            namaKos.setText(kosArrayList.get(pos).getName());
-            jenisKos.setText(kosArrayList.get(pos).getJenis());
-            hargaKos.setText(kosArrayList.get(pos).getHargaString());
-        }
+            public void bindView(int pos){
+                namaKos.setText(kosArrayList.get(pos).getName());
+                jenisKos.setText(kosArrayList.get(pos).getJenis());
+                hargaKos.setText(kosArrayList.get(pos).getHargaString());
+            }
 
-        @Override
-        public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
-        }
+            }
     }
 }
