@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
@@ -30,16 +31,32 @@ public class HomeFragment extends Fragment {
     private ArrayList<Kos> kosArrayList = new ArrayList<>();
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    TextView homeInfo;
-    ProgressBar progressBar;
+    RecyclerView recyclerView;
+//    TextView homeInfo;
+//    ProgressBar progressBar;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("HOMEFRAGMENT", "onStart");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Log.d("HOMEFRAGMENT", "onCreate");
+    }
 
     DatabaseReference databaseReference = database.getReference("kos");
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        Log.d("HOMEFRAGMENT", "onCreateView");
 
-        RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        recyclerView = view.findViewById(R.id.home_recycler_view);
 
 //        homeInfo = container.findViewById(R.id.home_info);
 //        progressBar = container.findViewById(R.id.home_progressBar);
@@ -67,6 +84,7 @@ public class HomeFragment extends Fragment {
                         kosArrayList.add(new Kos(id, name,address,"",details,type,owner,price,avrooms,rooms));
                     }
 
+                    viewData();
 //                    progressBar.setVisibility(View.GONE);
 //                    homeInfo.setVisibility(View.GONE);
                 }
@@ -79,15 +97,83 @@ public class HomeFragment extends Fragment {
         }
 
 
-        KosAdapter kosAdapter = new KosAdapter(kosArrayList);
-
-        recyclerView.setAdapter(kosAdapter);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
 
         return view;
     }
 
+    public void viewData(){
 
+        KosAdapter kosAdapter = new KosAdapter(kosArrayList);
+        recyclerView.setAdapter(kosAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Log.d("HOMEFRAGMENT", "onSaveInstanceState");
+
+        outState.putSerializable("list", (Serializable) kosArrayList);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Log.d("HOMEFRAGMENT", "onActivityCreated");
+
+        if(savedInstanceState != null){
+            kosArrayList = (ArrayList<Kos>) savedInstanceState.getSerializable("list");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("HOMEFRAGMENT", "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        Log.d("HOMEFRAGMENT", "onStop");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("HOMEFRAGMENT", "onResume");
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Log.d("HOMEFRAGMENT", "onAttach");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        Log.d("HOMEFRAGMENT", "onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Log.d("HOMEFRAGMENT", "onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        Log.d("HOMEFRAGMENT", "onDetach");
+    }
 }

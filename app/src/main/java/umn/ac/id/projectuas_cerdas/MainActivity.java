@@ -1,5 +1,6 @@
 package umn.ac.id.projectuas_cerdas;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -23,7 +24,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -39,20 +43,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onStart() {
         super.onStart();
+
+        Log.d("MAINACTIVITY", "onStart");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("MAINACTIVITY", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        homeInfo = findViewById(R.id.home_info);
-        progressBar = findViewById(R.id.home_progressBar);
-        loadFragment(new HomeFragment());
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bn_main);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        loadFragment(new HomeFragment());
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         emailUser = mFirebaseUser.getEmail();
@@ -127,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .beginTransaction()
                     .replace(R.id.main_fragment, fragment)
                     .commit();
+
+            Log.d("MAINACTIVITY", "MainActivity loadFragment return true");
             return true;
         }
         return false;
@@ -138,14 +144,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()){
             case R.id.home_menu:
-                progressBar.setVisibility(View.VISIBLE);
-                homeInfo.setVisibility(View.VISIBLE);
-                homeInfo.setText("Loading account information\nand Kos info");
-
                 fragment = new HomeFragment();
-
-                progressBar.setVisibility(View.GONE);
-                homeInfo.setVisibility(View.GONE);
+//                loadFragment(new HomeFragment());
 
                 break;
             case R.id.search_menu:
@@ -199,6 +199,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        Log.d("MAINACTIVITY", "onDestroy");
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         //firebaseAuth.getInstance();
         firebaseAuth.signOut();
