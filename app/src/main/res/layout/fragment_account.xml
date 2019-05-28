@@ -31,7 +31,7 @@
                 android:background="@drawable/circle"
                 android:padding="3dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/profpic" />
+                android:src="@drawable/ic_person_black_24dp" />
         </RelativeLayout>
 
         <TextView

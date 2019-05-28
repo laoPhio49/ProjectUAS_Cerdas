@@ -61,17 +61,28 @@ public class KosAdapter extends RecyclerView.Adapter  {
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
                     Intent intent = new Intent(itemView.getContext(), DetailKosan.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", kosArrayList.get(pos).getId());
-                    bundle.putString("nama",kosArrayList.get(pos).getName());
-                    bundle.putString("alamat",kosArrayList.get(pos).getAlamat());
-                    bundle.putString("avroom",kosArrayList.get(pos).getKamarTersedia());
-                    bundle.putString("rooms",kosArrayList.get(pos).getJumlahKamar());
-                    bundle.putString("tipe",kosArrayList.get(pos).getJenis());
-                    bundle.putString("price",kosArrayList.get(pos).getHarga());
-                    bundle.putString("detail",kosArrayList.get(pos).getDetail());
-                    bundle.putString("position", String.valueOf(pos));
-                    intent.putExtras(bundle);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("id", kosArrayList.get(pos).getId());
+//                    bundle.putString("nama",kosArrayList.get(pos).getName());
+//                    bundle.putString("alamat",kosArrayList.get(pos).getAlamat());
+//                    bundle.putString("avroom",kosArrayList.get(pos).getKamarTersedia());
+//                    bundle.putString("rooms",kosArrayList.get(pos).getJumlahKamar());
+//                    bundle.putString("tipe",kosArrayList.get(pos).getJenis());
+//                    bundle.putString("price",kosArrayList.get(pos).getHarga());
+//                    bundle.putString("detail",kosArrayList.get(pos).getDetail());
+//                    bundle.putString("position", String.valueOf(pos));
+//                    intent.putExtras(bundle);
+
+                    intent.putExtra("id", kosArrayList.get(pos).getId());
+                    intent.putExtra("nama",kosArrayList.get(pos).getName());
+                    intent.putExtra("alamat",kosArrayList.get(pos).getAlamat());
+                    intent.putExtra("avroom",kosArrayList.get(pos).getKamarTersedia());
+                    intent.putExtra("rooms",kosArrayList.get(pos).getJumlahKamar());
+                    intent.putExtra("tipe",kosArrayList.get(pos).getJenis());
+                    intent.putExtra("price",kosArrayList.get(pos).getHarga());
+                    intent.putExtra("detail",kosArrayList.get(pos).getDetail());
+                    intent.putExtra("position", String.valueOf(pos));
+                    //intent.putExtras(bundle);
                     itemView.getContext().startActivity(intent);
                 }
             });

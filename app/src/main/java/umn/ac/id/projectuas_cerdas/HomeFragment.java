@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -29,11 +31,17 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private ArrayList<Kos> kosArrayList = new ArrayList<>();
+    private ArrayList<Kos> searchKos = new ArrayList<>();
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     RecyclerView recyclerView;
 //    TextView homeInfo;
 //    ProgressBar progressBar;
+
+    Button btnSearch;
+    EditText edtSearch;
+
+    public static boolean searched = false;
 
     @Override
     public void onStart() {
@@ -57,6 +65,9 @@ public class HomeFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = view.findViewById(R.id.home_recycler_view);
+
+        btnSearch = view.findViewById(R.id.home_search_button);
+        edtSearch = view.findViewById(R.id.home_search_bar);
 
 //        homeInfo = container.findViewById(R.id.home_info);
 //        progressBar = container.findViewById(R.id.home_progressBar);
@@ -84,7 +95,7 @@ public class HomeFragment extends Fragment {
                         kosArrayList.add(new Kos(id, name,address,"",details,type,owner,price,avrooms,rooms));
                     }
 
-                    viewData();
+                    viewData(kosArrayList);
 //                    progressBar.setVisibility(View.GONE);
 //                    homeInfo.setVisibility(View.GONE);
                 }
@@ -96,14 +107,41 @@ public class HomeFragment extends Fragment {
             });
         }
 
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchQuery = edtSearch.getText().toString().toLowerCase();
+                if(searchQuery.isEmpty() && !searched){
+                    edtSearch.requestFocus();
+                }
+                else if (searchQuery.isEmpty() && searched){
+                    searchKos.clear();
+                    viewData(kosArrayList);
+                }
+                else{
+                    if(!searchKos.isEmpty()) searchKos.clear();
+                    for(Kos kos : kosArrayList){
+                        Log.d("SEARCHKOS", "Array searchKos: " + kos.getName() + " query: "+searchQuery);
+                        String nama = kos.getName().toLowerCase();
+                        if(nama.contains(searchQuery)){
+                            searchKos.add(kos);
+                            Log.d("SEARCHKOS", "Masuk cuy: " + kos.getName());
+                        }
+                    }
+                    searched = true;
+                    Log.d("SEARCHKOS", "Size Array searchKos: " + searchKos.size());
+                    viewData(searchKos);
+                }
+            }
+        });
 
 
         return view;
     }
 
-    public void viewData(){
+    public void viewData(ArrayList<Kos> array){
 
-        KosAdapter kosAdapter = new KosAdapter(kosArrayList);
+        KosAdapter kosAdapter = new KosAdapter(array);
         recyclerView.setAdapter(kosAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -115,7 +153,7 @@ public class HomeFragment extends Fragment {
 
         Log.d("HOMEFRAGMENT", "onSaveInstanceState");
 
-        outState.putSerializable("list", (Serializable) kosArrayList);
+        //outState.putSerializable("list", (Serializable) kosArrayList);
     }
 
     @Override

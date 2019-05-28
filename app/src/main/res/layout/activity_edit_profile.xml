@@ -24,7 +24,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.329">
 
-
         <TextView
             android:layout_centerHorizontal="true"
             android:id="@+id/topTv"
@@ -36,11 +35,11 @@
             android:textColor="@color/white"
             android:textSize="32dp" />
 
-
         <RelativeLayout
             android:id="@+id/relativeUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             >
 
             <RelativeLayout
@@ -58,13 +57,9 @@
                     android:background="@drawable/circle"
                     android:padding="3dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/profpic" />
+                    android:src="@drawable/ic_person_black_24dp" />
             </RelativeLayout>
-
         </RelativeLayout>
-
-
-
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
